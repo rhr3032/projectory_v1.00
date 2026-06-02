@@ -1,0 +1,48 @@
+---
+import '../styles/global.css'
+import type { AstroGlobal } from 'astro';
+import { Sidebar } from '../components/layouts/Sidebar.astro';
+import { Header } from '../components/layouts/Header.astro';
+
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title || 'Projectory - Enterprise Project Management'}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+  <div class="layout-container">
+    <Sidebar />
+    <div class="main-content">
+      <Header />
+      <main class="p-6">
+        <slot />
+      </main>
+    </div>
+  </div>
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      html.classList.toggle('dark', savedTheme === 'dark');
+    }
+
+    themeToggle?.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

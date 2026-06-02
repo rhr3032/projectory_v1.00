@@ -1,0 +1,110 @@
+---
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import type { AstroGlobal } from 'astro';
+
+// Utility function for class merging
+function cn(...inputs: (string | undefined)[]) {
+  return twMerge(clsx(inputs));
+}
+---
+
+<header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  <div class="flex h-14 items-center px-4">
+    <!-- Search Bar -->
+    <div class="flex flex-1 items-center space-x-4">
+      <div class="relative w-full max-w-sm flex-1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input
+          type="text"
+          placeholder="Search projects, tasks, clients..."
+          class="w-full rounded-md border border-input bg-background px-10 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        />
+      </div>
+    </div>
+
+    <!-- Right Side Actions -->
+    <div class="flex items-center space-x-2">
+      <!-- Notifications -->
+      <button class="relative h-9 w-9 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+        </svg>
+        <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-destructive"></span>
+      </button>
+
+      <!-- Theme Toggle -->
+      <button id="theme-toggle" class="h-9 w-9 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 hidden dark:block">
+          <circle cx="12" cy="12" r="4" />
+          <path d="m12 2 0 2m0 16 0 2m-9-9h2m16 0h2" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 block dark:hidden">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+        </svg>
+      </button>
+
+      <!-- User Menu -->
+      <div class="relative">
+        <button class="flex items-center gap-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors">
+          <div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-semibold text-sm">
+            RH
+          </div>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div class="absolute right-0 top-full mt-2 w-48 rounded-md border bg-popover text-popover-foreground shadow-md hidden">
+          <div class="p-4 border-b">
+            <p class="font-medium">Raisul Hasan</p>
+            <p class="text-sm text-muted-foreground">rhr3032@yahoo.com</p>
+          </div>
+          <div class="p-2">
+            <a href="/profile" class="flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              Profile
+            </a>
+            <a href="/settings" class="flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                <circle cx="12" cy="12" r="3" />
+                <path d="m12 1 0 6m0 6 0 6m9-9-6 0m-6 0-6 0" />
+              </svg>
+              Settings
+            </a>
+            <hr class="my-1" />
+            <button class="flex items-center gap-2 w-full rounded-md px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // User menu toggle
+  const userMenuButton = document.querySelector('button:has(.h-8.w-8.rounded-full)');
+  const userMenu = document.querySelector('.absolute.right-0.top-full');
+
+  userMenuButton?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    userMenu?.classList.toggle('hidden');
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', () => {
+    userMenu?.classList.add('hidden');
+  });
+</script>
