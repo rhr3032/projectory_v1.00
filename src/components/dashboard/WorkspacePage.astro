@@ -1,0 +1,117 @@
+---
+interface Stat {
+  label: string;
+  value: string;
+  detail: string;
+}
+
+interface Row {
+  [key: string]: string | number;
+}
+
+interface Props {
+  title: string;
+  eyebrow?: string;
+  description: string;
+  actionLabel?: string;
+  stats?: Stat[];
+  columns: string[];
+  rows: Row[];
+  cards?: Row[];
+}
+
+const { title, eyebrow, description, actionLabel = 'Create', stats = [], columns, rows, cards = [] } = Astro.props;
+
+const formatKey = (label: string) => label.toLowerCase().replaceAll(' ', '');
+---
+
+<section class="space-y-6">
+  <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <div class="max-w-3xl">
+      {eyebrow && <p class="text-sm font-medium text-primary">{eyebrow}</p>}
+      <h1 class="text-2xl font-bold tracking-tight">{title}</h1>
+      <p class="mt-1 text-sm text-muted-foreground">{description}</p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2">
+      <button class="btn-secondary px-4 py-2">Export</button>
+      <button class="btn-primary px-4 py-2">{actionLabel}</button>
+    </div>
+  </div>
+
+  {stats.length > 0 && (
+    <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      {stats.map((stat) => (
+        <article class="card p-5">
+          <p class="text-sm font-medium text-muted-foreground">{stat.label}</p>
+          <p class="mt-2 text-2xl font-bold">{stat.value}</p>
+          <p class="mt-1 text-xs text-muted-foreground">{stat.detail}</p>
+        </article>
+      ))}
+    </div>
+  )}
+
+  {cards.length > 0 && (
+    <div class="grid gap-4 lg:grid-cols-3">
+      {cards.map((card) => (
+        <article class="card p-5">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h2 class="font-semibold">{card.title || card.name}</h2>
+              <p class="mt-1 text-sm text-muted-foreground">{card.description || card.project || card.role}</p>
+            </div>
+            <span class="rounded-md bg-secondary px-2 py-1 text-xs font-medium text-secondary-foreground">{card.status || card.priority || card.category}</span>
+          </div>
+          <dl class="mt-4 grid gap-3 text-sm">
+            {Object.entries(card).filter(([key]) => !['title', 'name', 'description', 'status'].includes(key)).slice(0, 4).map(([key, value]) => (
+              <div class="flex items-center justify-between gap-4 border-t pt-3">
+                <dt class="capitalize text-muted-foreground">{key.replace(/([A-Z])/g, ' $1')}</dt>
+                <dd class="text-right font-medium">{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </article>
+      ))}
+    </div>
+  )}
+
+  <section class="card overflow-hidden">
+    <div class="flex flex-col gap-3 border-b p-5 md:flex-row md:items-center md:justify-between">
+      <div>
+        <h2 class="font-semibold">{title} Overview</h2>
+        <p class="text-sm text-muted-foreground">Operational details for the current workspace.</p>
+      </div>
+      <input class="input max-w-xs" type="search" placeholder="Filter this view..." />
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[760px] text-sm">
+        <thead class="bg-muted/40 text-left text-xs uppercase text-muted-foreground">
+          <tr>
+            {columns.map((column) => <th class="px-5 py-3 font-semibold">{column}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr class="border-t">
+              {columns.map((column) => (
+                <td class="px-5 py-4 align-middle">
+                  {formatKey(column) === 'progress' ? (
+                    <div class="flex min-w-32 items-center gap-3">
+                      <div class="h-2 flex-1 overflow-hidden rounded-full bg-secondary">
+                        <div class="h-full rounded-full bg-primary" style={`width: ${row[formatKey(column)]}%`}></div>
+                      </div>
+                      <span class="w-10 text-right text-xs text-muted-foreground">{row[formatKey(column)]}%</span>
+                    </div>
+                  ) : (
+                    <span class={formatKey(column) === 'status' || formatKey(column) === 'priority' ? 'rounded-md bg-secondary px-2 py-1 text-xs font-medium text-secondary-foreground' : ''}>
+                      {row[formatKey(column)]}
+                    </span>
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</section>

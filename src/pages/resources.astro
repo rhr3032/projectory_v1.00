@@ -1,0 +1,30 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import WorkspacePage from '../components/dashboard/WorkspacePage.astro';
+import { resources } from '../data/app';
+
+const rows = resources.map((resource) => ({
+  title: resource.title,
+  category: resource.category,
+  project: resource.project,
+  owner: resource.owner,
+  updated: resource.updated,
+}));
+---
+
+<MainLayout title="Resources">
+  <WorkspacePage
+    title="Resources"
+    eyebrow="Knowledge base"
+    description="Keep research, references, handoff notes, and reusable project material easy to find."
+    actionLabel="Add Resource"
+    stats={[
+      { label: 'Saved resources', value: '86', detail: '12 added this month' },
+      { label: 'Research docs', value: '24', detail: 'Across 7 projects' },
+      { label: 'Reusable assets', value: '19', detail: 'Design and dev templates' },
+      { label: 'Recently updated', value: '8', detail: 'Touched in the last week' },
+    ]}
+    columns={['Title', 'Category', 'Project', 'Owner', 'Updated']}
+    rows={rows}
+  />
+</MainLayout>

@@ -1,0 +1,32 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import WorkspacePage from '../components/dashboard/WorkspacePage.astro';
+import { clients } from '../data/app';
+
+const rows = clients.map((client) => ({
+  name: client.name,
+  contact: client.contact,
+  email: client.email,
+  country: client.country,
+  value: client.value,
+  health: client.health,
+}));
+---
+
+<MainLayout title="Clients">
+  <WorkspacePage
+    title="Clients"
+    eyebrow="Accounts"
+    description="Manage contacts, account health, and project value for every active client relationship."
+    actionLabel="Add Client"
+    stats={[
+      { label: 'Active clients', value: '14', detail: '4 with work in progress' },
+      { label: 'Pipeline value', value: '$214K', detail: 'Open and active accounts' },
+      { label: 'Healthy accounts', value: '11', detail: 'No immediate delivery risk' },
+      { label: 'Needs attention', value: '3', detail: 'Follow-up scheduled' },
+    ]}
+    cards={clients.map((client) => ({ title: client.name, description: client.contact, status: client.health, country: client.country, value: client.value, email: client.email }))}
+    columns={['Name', 'Contact', 'Email', 'Country', 'Value', 'Health']}
+    rows={rows}
+  />
+</MainLayout>

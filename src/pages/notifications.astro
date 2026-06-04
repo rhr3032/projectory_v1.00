@@ -1,0 +1,29 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import WorkspacePage from '../components/dashboard/WorkspacePage.astro';
+import { notifications } from '../data/app';
+
+const rows = notifications.map((notification) => ({
+  title: notification.title,
+  message: notification.message,
+  status: notification.status,
+  time: notification.time,
+}));
+---
+
+<MainLayout title="Notifications">
+  <WorkspacePage
+    title="Notifications"
+    eyebrow="Inbox"
+    description="Centralize deadline alerts, mentions, file activity, and task updates from across the workspace."
+    actionLabel="Mark All Read"
+    stats={[
+      { label: 'Unread', value: '2', detail: 'Needs attention' },
+      { label: 'Today', value: '6', detail: 'New workspace events' },
+      { label: 'Mentions', value: '3', detail: 'Direct references' },
+      { label: 'Alerts', value: '4', detail: 'Deadline and risk signals' },
+    ]}
+    columns={['Title', 'Message', 'Status', 'Time']}
+    rows={rows}
+  />
+</MainLayout>

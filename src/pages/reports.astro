@@ -1,0 +1,30 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import WorkspacePage from '../components/dashboard/WorkspacePage.astro';
+import { reports } from '../data/app';
+
+const rows = reports.map((report) => ({
+  name: report.name,
+  type: report.type,
+  owner: report.owner,
+  cadence: report.cadence,
+  status: report.status,
+}));
+---
+
+<MainLayout title="Reports">
+  <WorkspacePage
+    title="Reports"
+    eyebrow="Insights"
+    description="Generate delivery summaries, utilization reports, client health views, and deadline risk snapshots."
+    actionLabel="New Report"
+    stats={[
+      { label: 'Report templates', value: '12', detail: 'Project, team, client, and deadline' },
+      { label: 'Ready exports', value: '7', detail: 'Available as PDF or CSV' },
+      { label: 'Live reports', value: '3', detail: 'Refreshing from workspace data' },
+      { label: 'Scheduled', value: '5', detail: 'Automated delivery enabled' },
+    ]}
+    columns={['Name', 'Type', 'Owner', 'Cadence', 'Status']}
+    rows={rows}
+  />
+</MainLayout>

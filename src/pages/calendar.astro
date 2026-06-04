@@ -1,0 +1,29 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import WorkspacePage from '../components/dashboard/WorkspacePage.astro';
+import { calendarEvents } from '../data/app';
+
+const rows = calendarEvents.map((event) => ({
+  time: event.time,
+  title: event.title,
+  owner: event.owner,
+  project: event.project,
+}));
+---
+
+<MainLayout title="Calendar">
+  <WorkspacePage
+    title="Calendar"
+    eyebrow="Schedule"
+    description="Review meetings, project checkpoints, delivery windows, and stakeholder syncs for the day."
+    actionLabel="New Event"
+    stats={[
+      { label: 'Today', value: '4', detail: 'Scheduled events' },
+      { label: 'This week', value: '17', detail: 'Meetings and milestones' },
+      { label: 'Deadlines', value: '5', detail: 'Due within 10 days' },
+      { label: 'Reviews', value: '6', detail: 'Design, QA, and client reviews' },
+    ]}
+    columns={['Time', 'Title', 'Owner', 'Project']}
+    rows={rows}
+  />
+</MainLayout>

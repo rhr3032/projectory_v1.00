@@ -1,12 +1,4 @@
 ---
-import { clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-import type { AstroGlobal } from 'astro';
-
-// Utility function for class merging
-function cn(...inputs: (string | undefined)[]) {
-  return twMerge(clsx(inputs));
-}
 ---
 
 <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -29,13 +21,13 @@ function cn(...inputs: (string | undefined)[]) {
     <!-- Right Side Actions -->
     <div class="flex items-center space-x-2">
       <!-- Notifications -->
-      <button class="relative h-9 w-9 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors">
+      <a href="/notifications" class="relative flex h-9 w-9 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground transition-colors" aria-label="Notifications">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
           <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
           <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
         </svg>
         <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-destructive"></span>
-      </button>
+      </a>
 
       <!-- Theme Toggle -->
       <button id="theme-toggle" class="h-9 w-9 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors">

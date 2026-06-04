@@ -1,0 +1,28 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import WorkspacePage from '../components/dashboard/WorkspacePage.astro';
+
+const rows = [
+  { name: 'Full name', value: 'Raisul Hasan', status: 'Verified' },
+  { name: 'Email', value: 'rhr3032@yahoo.com', status: 'Primary' },
+  { name: 'Role', value: 'Admin', status: 'Active' },
+  { name: 'Workspace', value: 'Projectory Enterprise', status: 'Owner' },
+];
+---
+
+<MainLayout title="Profile">
+  <WorkspacePage
+    title="Profile"
+    eyebrow="Account"
+    description="Review your account details, workspace role, and personal delivery preferences."
+    actionLabel="Update Profile"
+    stats={[
+      { label: 'Assigned projects', value: '6', detail: 'Across design and delivery' },
+      { label: 'Open tasks', value: '9', detail: '3 due this week' },
+      { label: 'Approvals', value: '4', detail: 'Waiting for review' },
+      { label: 'Role', value: 'Admin', detail: 'Full workspace access' },
+    ]}
+    columns={['Name', 'Value', 'Status']}
+    rows={rows}
+  />
+</MainLayout>

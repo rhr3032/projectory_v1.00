@@ -1,0 +1,30 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import WorkspacePage from '../components/dashboard/WorkspacePage.astro';
+import { files } from '../data/app';
+
+const rows = files.map((file) => ({
+  name: file.name,
+  type: file.type,
+  project: file.project,
+  size: file.size,
+  updated: file.updated,
+}));
+---
+
+<MainLayout title="Files">
+  <WorkspacePage
+    title="Files"
+    eyebrow="Assets"
+    description="A shared file index for design files, documents, spreadsheets, release material, and client handoff assets."
+    actionLabel="Upload File"
+    stats={[
+      { label: 'Stored files', value: '132', detail: '42 linked to active projects' },
+      { label: 'Storage used', value: '8.6 GB', detail: '31% of workspace quota' },
+      { label: 'Updated today', value: '9', detail: 'Latest uploads and revisions' },
+      { label: 'Pending review', value: '5', detail: 'Need owner approval' },
+    ]}
+    columns={['Name', 'Type', 'Project', 'Size', 'Updated']}
+    rows={rows}
+  />
+</MainLayout>

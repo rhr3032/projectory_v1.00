@@ -1,0 +1,28 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import WorkspacePage from '../components/dashboard/WorkspacePage.astro';
+import { settings } from '../data/app';
+
+const rows = settings.map((setting) => ({
+  name: setting.name,
+  value: setting.value,
+  status: setting.status,
+}));
+---
+
+<MainLayout title="Settings">
+  <WorkspacePage
+    title="Settings"
+    eyebrow="Workspace controls"
+    description="Manage workspace preferences, exports, notification rules, and project delivery defaults."
+    actionLabel="Save Changes"
+    stats={[
+      { label: 'Configured areas', value: '9', detail: 'Workspace settings completed' },
+      { label: 'Integrations', value: '4', detail: 'Ready for API connection' },
+      { label: 'Roles', value: '4', detail: 'Admin, manager, member, viewer' },
+      { label: 'Security', value: 'Good', detail: 'No pending setup actions' },
+    ]}
+    columns={['Name', 'Value', 'Status']}
+    rows={rows}
+  />
+</MainLayout>

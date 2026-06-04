@@ -1,0 +1,32 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import WorkspacePage from '../../components/dashboard/WorkspacePage.astro';
+import { projects } from '../../data/app';
+
+const filtered = projects.filter((project) => project.type === 'UI/UX');
+const rows = filtered.map((project) => ({
+  name: project.name,
+  client: project.client,
+  status: project.status,
+  priority: project.priority,
+  owner: project.owner,
+  progress: project.progress,
+}));
+---
+
+<MainLayout title="UI/UX Projects">
+  <WorkspacePage
+    title="UI/UX Projects"
+    eyebrow="Design delivery"
+    description="Research, wireframes, prototypes, design systems, and handoff work for product experience projects."
+    actionLabel="New Design Project"
+    stats={[
+      { label: 'Active design work', value: '5', detail: 'Research through handoff' },
+      { label: 'Design reviews', value: '3', detail: 'Scheduled this week' },
+      { label: 'Prototype coverage', value: '82%', detail: 'Key flows represented' },
+      { label: 'Handoff ready', value: '2', detail: 'Awaiting developer QA' },
+    ]}
+    columns={['Name', 'Client', 'Status', 'Priority', 'Owner', 'Progress']}
+    rows={rows}
+  />
+</MainLayout>

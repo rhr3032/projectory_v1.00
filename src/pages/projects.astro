@@ -1,0 +1,33 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import WorkspacePage from '../components/dashboard/WorkspacePage.astro';
+import { projects } from '../data/app';
+
+const rows = projects.map((project) => ({
+  name: project.name,
+  client: project.client,
+  type: project.type,
+  status: project.status,
+  priority: project.priority,
+  due: project.due,
+  progress: project.progress,
+}));
+---
+
+<MainLayout title="Projects">
+  <WorkspacePage
+    title="Projects"
+    eyebrow="Delivery portfolio"
+    description="Track every client initiative from discovery through launch, with owner, risk, priority, and progress visible at a glance."
+    actionLabel="New Project"
+    stats={[
+      { label: 'Active projects', value: '18', detail: '4 due in the next 14 days' },
+      { label: 'Average progress', value: '68%', detail: 'Across active delivery work' },
+      { label: 'High priority', value: '7', detail: '2 marked critical' },
+      { label: 'Client value', value: '$130K', detail: 'Open portfolio value' },
+    ]}
+    cards={projects.map((project) => ({ title: project.name, description: project.client, status: project.status, priority: project.priority, owner: project.owner, due: project.due, progress: `${project.progress}%` }))}
+    columns={['Name', 'Client', 'Type', 'Status', 'Priority', 'Due', 'Progress']}
+    rows={rows}
+  />
+</MainLayout>

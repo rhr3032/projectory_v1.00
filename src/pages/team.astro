@@ -1,0 +1,31 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import WorkspacePage from '../components/dashboard/WorkspacePage.astro';
+import { team } from '../data/app';
+
+const rows = team.map((member) => ({
+  name: member.name,
+  role: member.role,
+  workload: member.workload,
+  focus: member.focus,
+  availability: member.availability,
+}));
+---
+
+<MainLayout title="Team">
+  <WorkspacePage
+    title="Team"
+    eyebrow="Capacity"
+    description="Understand team focus, workload, and availability before assigning the next piece of work."
+    actionLabel="Invite Member"
+    stats={[
+      { label: 'Team members', value: '12', detail: '8 active on delivery work' },
+      { label: 'Avg utilization', value: '71%', detail: 'Healthy operating range' },
+      { label: 'Available today', value: '7', detail: 'Can accept new work' },
+      { label: 'At risk load', value: '2', detail: 'Above 85% utilization' },
+    ]}
+    cards={team.map((member) => ({ title: member.name, description: member.role, status: member.availability, workload: member.workload, focus: member.focus }))}
+    columns={['Name', 'Role', 'Workload', 'Focus', 'Availability']}
+    rows={rows}
+  />
+</MainLayout>

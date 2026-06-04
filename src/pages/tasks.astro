@@ -1,0 +1,31 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import WorkspacePage from '../components/dashboard/WorkspacePage.astro';
+import { tasks } from '../data/app';
+
+const rows = tasks.map((task) => ({
+  name: task.name,
+  project: task.project,
+  assignee: task.assignee,
+  status: task.status,
+  priority: task.priority,
+  due: task.due,
+}));
+---
+
+<MainLayout title="Tasks">
+  <WorkspacePage
+    title="Tasks"
+    eyebrow="Execution board"
+    description="A focused task queue for the work that moves each project forward today."
+    actionLabel="New Task"
+    stats={[
+      { label: 'Open tasks', value: '31', detail: '12 planned for this week' },
+      { label: 'In review', value: '6', detail: 'Waiting on stakeholder feedback' },
+      { label: 'Blocked', value: '3', detail: 'Needs action from owners' },
+      { label: 'Done this week', value: '18', detail: 'Up 22% from last week' },
+    ]}
+    columns={['Name', 'Project', 'Assignee', 'Status', 'Priority', 'Due']}
+    rows={rows}
+  />
+</MainLayout>

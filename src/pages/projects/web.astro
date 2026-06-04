@@ -1,0 +1,32 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import WorkspacePage from '../../components/dashboard/WorkspacePage.astro';
+import { projects } from '../../data/app';
+
+const filtered = projects.filter((project) => project.type === 'Web' || project.type === 'SaaS');
+const rows = filtered.map((project) => ({
+  name: project.name,
+  client: project.client,
+  type: project.type,
+  status: project.status,
+  priority: project.priority,
+  progress: project.progress,
+}));
+---
+
+<MainLayout title="Web Projects">
+  <WorkspacePage
+    title="Web Projects"
+    eyebrow="Web delivery"
+    description="Websites, SaaS dashboards, internal tools, and production launch work tracked in one place."
+    actionLabel="New Web Project"
+    stats={[
+      { label: 'Web builds', value: '9', detail: 'Including SaaS and dashboards' },
+      { label: 'Staging releases', value: '4', detail: 'Ready for stakeholder review' },
+      { label: 'Production launches', value: '2', detail: 'Planned this month' },
+      { label: 'Open QA items', value: '11', detail: 'Across active web projects' },
+    ]}
+    columns={['Name', 'Client', 'Type', 'Status', 'Priority', 'Progress']}
+    rows={rows}
+  />
+</MainLayout>

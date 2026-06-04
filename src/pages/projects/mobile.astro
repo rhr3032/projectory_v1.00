@@ -1,0 +1,32 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import WorkspacePage from '../../components/dashboard/WorkspacePage.astro';
+import { projects } from '../../data/app';
+
+const filtered = projects.filter((project) => project.type === 'Mobile App');
+const rows = filtered.map((project) => ({
+  name: project.name,
+  client: project.client,
+  status: project.status,
+  priority: project.priority,
+  owner: project.owner,
+  progress: project.progress,
+}));
+---
+
+<MainLayout title="Mobile Projects">
+  <WorkspacePage
+    title="Mobile Projects"
+    eyebrow="App delivery"
+    description="Mobile app design, development, QA, release readiness, and store submission tracking."
+    actionLabel="New Mobile Project"
+    stats={[
+      { label: 'Mobile projects', value: '4', detail: 'iOS, Android, and cross-platform' },
+      { label: 'Release candidates', value: '2', detail: 'Preparing for QA' },
+      { label: 'Store tasks', value: '7', detail: 'Metadata, screenshots, review notes' },
+      { label: 'Crash-free target', value: '99%', detail: 'Release quality goal' },
+    ]}
+    columns={['Name', 'Client', 'Status', 'Priority', 'Owner', 'Progress']}
+    rows={rows}
+  />
+</MainLayout>
